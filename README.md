@@ -1,2 +1,2 @@
-# FindCustom
-Sistema para localização de possíveis clientes
+# LeadGen Automation (LGA)
+
