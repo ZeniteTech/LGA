@@ -19,10 +19,10 @@ Este projeto automatiza a prospecção ativa de clientes (SDR Automatizado) para
 
 ## Como Iniciar a Aplicação
 
-### Pré-requisitos
-Antes de começar, você vai precisar do [Git](https://git-scm.com/install/) e do [Python](https://www.python.org/downloads/) instalados em sua máquina.
+- ### Pré-requisitos
+  Antes de começar, você vai precisar do [Git](https://git-scm.com/install/) e do [Python](https://www.python.org/downloads/) instalados em sua máquina.
 
-### Passo a Passo
+- ### Passo a Passo
 
 1. **Clone o repositório:**
    ```bash
