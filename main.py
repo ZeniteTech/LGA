@@ -1,37 +1,68 @@
 from service.google_places import buscar_empresas
-
-# Importa todos os models
+import streamlit as st
+#from service.notion_api import enviar_para_notion
 # from Model.Enterprise import Enterprise
 
 
 def main():
-    query_busca = "Barbearias Limeira"
-    print(f"Buscando leads para a query: {query_busca}")
-    resultado = buscar_empresas(query_busca)
-    
-    lista_leads = resultado.get("results") or resultado.get("places") or []
-    
-    if not lista_leads:
-        print("Nenhum lead encontrado.")
-        return
-    
-    print(f"Leads encontrados: {len(lista_leads)}. Mapeando os dados:")
-    
-    for empresa in lista_leads:
-        print(f'-'*50)
-        nome = empresa.get('displayName',{}).get('text', 'Sem nome')
-        print(f"Nome: {nome}")
-        print(f"Endereço:{empresa.get('formattedAddress', 'Sem endereço')}")
-        print(f"Telefone: {empresa.get('nationalPhoneNumber', 'Sem telefone')}")
-        site = empresa.get('websiteUri')
-        if site:
-            print(f"Website: {site}")
-        else:
-            print("Website: 🚨 NÃO POSSUI SITE 🚨")
-        print(f"Avaliação: {empresa.get('rating', 'Sem avaliação')}")
-        print(f"Nível de Preço: {empresa.get('priceLevel', 'Sem nível de preço')}")
-        print(f'-'*50)
-        input("Pressione Enter para continuar...")
+    st.title("LeadGen Automation (LGA)")
+    st.subheader("Prospecção Ativa Inteligente")
+
+    # 1. Caixa de texto e Botão de Busca
+    query = st.text_input("Digite sua query de busca (ex: Escritórios de Advocacia em Limeira):")
+    botao_buscar = st.button("Buscar Leads")
+
+    # Inicializa um estado para guardar os leads entre cliques de botões
+    if "leads" not in st.session_state:
+        st.session_state.leads = []
+
+    if botao_buscar and query:
+        with st.spinner("Buscando no Google Places..."):
+            resultado = buscar_empresas(query)
+            st.session_state.leads = resultado.get("places", [])
+
+    # 2. Listagem dos resultados com opção de seleção
+    if st.session_state.leads:
+        st.write(f"### Foram encontrados {len(st.session_state.leads)} leads:")
         
+        leads_selecionados = []
+        
+        for i, empresa in enumerate(st.session_state.leads):
+            nome = empresa.get('displayName', {}).get('text', 'Sem Nome')
+            site = empresa.get('websiteUri')  # Pegamos bruto para validar abaixo
+            telefone = empresa.get('nationalPhoneNumber', 'Sem telefone')
+            
+            # --- CRIAÇÃO DA CAIXINHA (CARD) ---
+            # Tudo que for identado dentro deste 'with' ficará na mesma div/card
+            with st.container(border=True):
+                
+                # Cria colunas internas dentro da caixinha
+                col_check, col_texto = st.columns([1, 22])
+
+                with col_check:
+                    # Centraliza levemente o checkbox adicionando um pequeno espaçamento no topo
+                    st.markdown("<div style='padding-top: 10px;'></div>", unsafe_allow_html=True)
+                    selecionado = st.checkbox("", key=f"lead_{i}")
+
+                with col_texto:
+                    # Formata o link do site ou exibe o alerta em vermelho
+                    if site:
+                        site_formatado = f"🌐 [Acessar Site]({site})"
+                    else:
+                        site_formatado = "🌐 <span style='color:#ff4b4b; font-weight:bold;'>Não encontrado</span>"
+                    
+                    st.markdown(f"""
+                    ### {nome}
+                    {site_formatado}  
+                    📞 **{telefone}**
+                    """, unsafe_allow_html=True)
+
+            # Se o usuário marcou o checkbox daquela linha, adiciona na lista
+            if selecionado:
+                leads_selecionados.append(empresa)
+
+            # Um pequeno espaçamento entre uma caixinha e outra (substituindo a linha antiga)
+            st.markdown("<div style='margin-bottom: 10px;'></div>", unsafe_allow_html=True)
+
 if __name__ == "__main__":
     main()
