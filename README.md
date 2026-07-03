@@ -25,14 +25,25 @@ Este projeto automatiza a prospecção ativa de clientes (SDR Automatizado) para
 - ### Passo a Passo
 
 1. **Clone o repositório:**
+
+   > **Branch main:**
+     ```bash
+     git clone https://github.com/ZeniteTech/LGA
+     ```
+
+    > **Branch develop:**
+    ```base
+    git clone https://github.com/ZeniteTech/LGA -b develop --single-branch
+    ```
+2. **Instale as dependências:**
    ```bash
-   git clone https://github.com/ZeniteTech/LGA
+    pip install streamlit
    ```
 
-2. **Entre no diretório do projeto:**
+4. **Entre no diretório do projeto:**
    ```bash
    cd LGA
    ```
-3. **Execute o programa:**
+5. **Execute o programa:**
    ```bash
    python -m streamlit run main.py
