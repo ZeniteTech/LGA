@@ -16,3 +16,10 @@ Este projeto automatiza a prospecção ativa de clientes (SDR Automatizado) para
 
   - **API do Google Places**: Salva os dados brutos das empresas no Notion.
   - **Notion**: Recebe e organiza os dados enviados da API Google Places, servindo como um banco de dados e uma plataforma de gerenciamento de informações.
+
+<h2>Para rodar o programa</h2>
+Acessar o terminar e executar o seguinte comando:
+
+```bash
+python -m streamlit run c:/LGA/main.py
+```
