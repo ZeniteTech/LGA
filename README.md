@@ -36,5 +36,3 @@ Antes de começar, você vai precisar do [Git](https://git-scm.com/install/) e d
 3. **Execute o programa:**
    ```bash
    python -m streamlit run main.py
-  ```
-   
