@@ -17,9 +17,24 @@ Este projeto automatiza a prospecção ativa de clientes (SDR Automatizado) para
   - **API do Google Places**: Salva os dados brutos das empresas no Notion.
   - **Notion**: Recebe e organiza os dados enviados da API Google Places, servindo como um banco de dados e uma plataforma de gerenciamento de informações.
 
-<h2>Para rodar o programa</h2>
-Acessar o terminar e executar o seguinte comando:
+## Como Iniciar a Aplicação
 
-```bash
-python -m streamlit run c:/LGA/main.py
-```
+### Pré-requisitos
+Antes de começar, você vai precisar do [Git](https://git-scm.com/install/) e do [Python](https://www.python.org/downloads/) instalados em sua máquina.
+
+### Passo a Passo
+
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/ZeniteTech/LGA
+   ```
+
+2. **Entre no diretório do projeto:**
+   ```bash
+   cd LGA
+   ```
+3. **Execute o programa:**
+   ```bash
+   python -m streamlit run main.py
+  ```
+   
