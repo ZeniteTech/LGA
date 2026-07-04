@@ -47,7 +47,7 @@ def main():
                 with col_texto:
                     # Formata o link do site ou exibe o alerta em vermelho
                     if site:
-                        site_formatado = f"🌐 [Acessar Site]({site})"
+                        site_formatado = f"🌐 [{site}]({site})"
                     else:
                         site_formatado = "🌐 <span style='color:#ff4b4b; font-weight:bold;'>Não encontrado</span>"
                     
