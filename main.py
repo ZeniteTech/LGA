@@ -1,68 +1,12 @@
-from service.google_places import buscar_empresas
 import streamlit as st
-#from service.notion_api import enviar_para_notion
-# from Model.Enterprise import Enterprise
+from viewer.lga_viewer import lga_viewer
+from viewer.login_viewer import login
 
 
 def main():
-    st.title("LeadGen Automation (LGA)")
-    st.subheader("Prospecção Ativa Inteligente")
+    if login():
+        lga_viewer()
 
-    # 1. Caixa de texto e Botão de Busca
-    query = st.text_input("Digite sua query de busca (ex: Escritórios de Advocacia em Limeira):")
-    botao_buscar = st.button("Buscar Leads")
-
-    # Inicializa um estado para guardar os leads entre cliques de botões
-    if "leads" not in st.session_state:
-        st.session_state.leads = []
-
-    if botao_buscar and query:
-        with st.spinner("Buscando no Google Places..."):
-            resultado = buscar_empresas(query)
-            st.session_state.leads = resultado.get("places", [])
-
-    # 2. Listagem dos resultados com opção de seleção
-    if st.session_state.leads:
-        st.write(f"### Foram encontrados {len(st.session_state.leads)} leads:")
-        
-        leads_selecionados = []
-        
-        for i, empresa in enumerate(st.session_state.leads):
-            nome = empresa.get('displayName', {}).get('text', 'Sem Nome')
-            site = empresa.get('websiteUri')  # Pegamos bruto para validar abaixo
-            telefone = empresa.get('nationalPhoneNumber', 'Sem telefone')
-            
-            # --- CRIAÇÃO DA CAIXINHA (CARD) ---
-            # Tudo que for identado dentro deste 'with' ficará na mesma div/card
-            with st.container(border=True):
-                
-                # Cria colunas internas dentro da caixinha
-                col_check, col_texto = st.columns([1, 22])
-
-                with col_check:
-                    # Centraliza levemente o checkbox adicionando um pequeno espaçamento no topo
-                    st.markdown("<div style='padding-top: 10px;'></div>", unsafe_allow_html=True)
-                    selecionado = st.checkbox("", key=f"lead_{i}")
-
-                with col_texto:
-                    # Formata o link do site ou exibe o alerta em vermelho
-                    if site:
-                        site_formatado = f"🌐 [{site}]({site})"
-                    else:
-                        site_formatado = "🌐 <span style='color:#ff4b4b; font-weight:bold;'>Não encontrado</span>"
-                    
-                    st.markdown(f"""
-                    ### {nome}
-                    {site_formatado}  
-                    📞 **{telefone}**
-                    """, unsafe_allow_html=True)
-
-            # Se o usuário marcou o checkbox daquela linha, adiciona na lista
-            if selecionado:
-                leads_selecionados.append(empresa)
-
-            # Um pequeno espaçamento entre uma caixinha e outra (substituindo a linha antiga)
-            st.markdown("<div style='margin-bottom: 10px;'></div>", unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
