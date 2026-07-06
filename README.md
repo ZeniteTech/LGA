@@ -19,33 +19,5 @@ Este projeto automatiza a prospecção ativa de clientes (SDR Automatizado) para
 
 ## Como Iniciar a Aplicação
 
-- ### Pré-requisitos
-  Antes de começar, você vai precisar do [Git](https://git-scm.com/install/) e do [Python](https://www.python.org/downloads/) instalados em sua máquina.
-
-- ### Passo a Passo
-
-1. **Clone o repositório:**
-
-   > **Branch main:**
-     ```bash
-     git clone https://github.com/ZeniteTech/LGA
-     ```
-
-    > **Branch develop:**
-    ```base
-    git clone https://github.com/ZeniteTech/LGA -b develop --single-branch
-    ```
-2. **Instale as dependências:**
-   ```bash
-    pip install streamlit
-   ```
-
-4. **Entre no diretório do projeto:**
-   ```bash
-   cd LGA
-   ```
-5. **Execute o programa:**
-   ```bash
-   python -m streamlit run main.py
-  
+**Acesse o link abaixo:**  
 https://leadgenautomation.streamlit.app/
