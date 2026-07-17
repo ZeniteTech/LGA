@@ -49,7 +49,7 @@ def lga_viewer():
                         site_formatado = "🌐 <span style='color:#ff4b4b; font-weight:bold;'>Não encontrado</span>"
                     
                     st.markdown(f"""
-                    ### {nome}
+                    ### [{nome}](https://www.google.com/search?q={nome.replace(' ', '+')})
                     {site_formatado}  
                     📞 **{telefone}**
                     """, unsafe_allow_html=True)
