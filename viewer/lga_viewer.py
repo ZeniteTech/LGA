@@ -1,3 +1,5 @@
+from turtle import color
+
 from service.google_places import buscar_empresas
 import streamlit as st
 
@@ -49,7 +51,28 @@ def lga_viewer():
                         site_formatado = "🌐 <span style='color:#ff4b4b; font-weight:bold;'>Não encontrado</span>"
                     
                     st.markdown(f"""
-                    ### [{nome}](https://www.google.com/search?q={nome.replace(' ', '+')})
+                    <style>
+                       a.link-google:hover{{
+                           color:#ff4b4b;
+                           text-decoration:underline;
+                           font-weight:bold;
+                           font-size:20px;
+                       }}
+
+                        a.link-google{{
+                            color:white;
+                            font-size:19px;
+                            font-weight:bold;
+                            text-decoration:none;
+                        }}             
+                    </style>
+                                              
+                    <a class="link-google"
+                    href="https://www.google.com/search?q={nome.replace(' ', '+')}"
+                    target="_blank">
+                    {nome}
+                    </a>
+                    <br>
                     {site_formatado}  
                     📞 **{telefone}**
                     """, unsafe_allow_html=True)
