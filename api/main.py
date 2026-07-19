@@ -1,5 +1,10 @@
+
+
+from database.init_db import init_db
+
+
 def main():
-    return "Hello, World!"
+    init_db()
 
 if __name__ == "__main__":
     main()
