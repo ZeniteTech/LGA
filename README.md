@@ -6,10 +6,10 @@ Este projeto automatiza a prospecção ativa de clientes (SDR Automatizado) para
 
 ```text
                           (II)
-        API Google Places -> Claude -> Notion
+        API Google Places -> Claude -> neonDataBase
          |  (I)
          v
-        Notion
+        neonDataBase
 ```
 
 - **Cenário (I):**
@@ -45,5 +45,13 @@ Este projeto automatiza a prospecção ativa de clientes (SDR Automatizado) para
    cd LGA
    ```
 5. **Execute o programa:**
-   ```bash
-   python -m streamlit run main.py
+   
+      **Frontend:**
+    ```bash
+    python -m streamlit run frontend/app.py
+    ```
+   
+      **API:**
+      ```bash
+      python api/main.py
+      
