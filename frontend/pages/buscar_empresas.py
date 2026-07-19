@@ -1,7 +1,7 @@
 import re
 from turtle import color
 
-from service.google_places import buscar_empresas
+from api.service.google_places import buscar_empresas
 import streamlit as st
 
 def lga_viewer():

@@ -1,11 +1,11 @@
+from frontend.pages import buscar_empresas
 import streamlit as st
-from viewer.lga_viewer import lga_viewer
-from viewer.login_viewer import login
-
+from frontend.pages.login import login
+from frontend.pages.buscar_empresas import buscar_empresas
 
 def main():
     if login():
-        lga_viewer()
+        buscar_empresas()
 
 
 if __name__ == "__main__":
