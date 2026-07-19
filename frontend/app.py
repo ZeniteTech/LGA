@@ -1,11 +1,9 @@
-from frontend.pages import buscar_empresas
-import streamlit as st
-from frontend.pages.login import login
-from frontend.pages.buscar_empresas import buscar_empresas
+from pages.empresas import empresas
+from pages.login import login
 
 def main():
     if login():
-        buscar_empresas()
+        empresas()
 
 
 if __name__ == "__main__":

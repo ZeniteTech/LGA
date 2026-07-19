@@ -7,7 +7,7 @@ from sqlalchemy import String
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 
-from database.base import Base
+from api.database.base import Base
 
 
 class Enterprise(Base):

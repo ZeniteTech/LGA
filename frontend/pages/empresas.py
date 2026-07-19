@@ -1,10 +1,8 @@
 import re
-from turtle import color
-
 from api.service.google_places import buscar_empresas
 import streamlit as st
 
-def lga_viewer():
+def empresas():
     st.title("LeadGen Automation (LGA)")
     st.subheader("Prospecção Ativa Inteligente")
 
