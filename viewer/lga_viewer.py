@@ -1,6 +1,4 @@
 import re
-from turtle import color
-
 from service.google_places import buscar_empresas
 import streamlit as st
 
