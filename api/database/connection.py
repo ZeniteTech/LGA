@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 
-from api.config.settings import settings
+from config.settings import settings
 
 DATABASE_URL = (
     f"{settings.DB_URL}"
