@@ -58,7 +58,6 @@ def lga_viewer():
                            color:#ff4b4b;
                            text-decoration:none;
                            font-weight:bold;
-                           font-size:20px;
                        }}
 
                         a.link-google{{
@@ -71,8 +70,7 @@ def lga_viewer():
                         a.link-whatsapp:hover{{
                             color:#25D366;
                             text-decoration:none;
-                            font-weight:bold;
-                            font-size:19px;                                
+                            font-weight:bold;                     
                         }}
                                 
                         a.link-whatsapp{{
