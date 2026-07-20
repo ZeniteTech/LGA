@@ -1,8 +1,10 @@
 import re
 from service.google_places import buscar_empresas
 import streamlit as st
+from viewer.theme import apply_dark_theme
 
 def lga_viewer():
+    apply_dark_theme()
     st.title("LeadGen Automation (LGA)")
     st.subheader("Prospecção Ativa Inteligente")
 
