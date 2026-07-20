@@ -37,7 +37,7 @@ Este projeto automatiza a prospecção ativa de clientes (SDR Automatizado) para
     ```
 2. **Instale as dependências:**
    ```bash
-    pip install streamlit
+    pip install -r requirements.txt
    ```
 
 4. **Entre no diretório do projeto:**
