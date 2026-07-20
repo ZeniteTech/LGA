@@ -2,10 +2,12 @@ import streamlit as st
 import os
 from dotenv import load_dotenv
 import time
+from viewer.theme import apply_dark_theme
 
 load_dotenv(override = True)
 
 def login():
+    apply_dark_theme()
     senha=os.getenv("LOGIN_LGA")
     if "logado" not in st.session_state:
         st.session_state.logado = False
