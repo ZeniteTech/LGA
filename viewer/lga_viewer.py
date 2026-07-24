@@ -89,7 +89,7 @@ def lga_viewer():
                     <br>
                     {site_formatado}  
                     <a class="link-whatsapp" 
-                    href="https://web.whatsapp.com/send?phone={telefone_whatsapp}" target="_blank">
+                    href="https://wa.me/{telefone_whatsapp}" target="_blank">
                         📞 {telefone}
                     </a>
                     """, unsafe_allow_html=True)
