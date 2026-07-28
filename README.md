@@ -6,10 +6,10 @@ Este projeto automatiza a prospecção ativa de clientes (SDR Automatizado) para
 
 ```text
                           (II)
-        API Google Places -> Claude -> Notion
+        API Google Places -> Claude -> neonDataBase
          |  (I)
          v
-        Notion
+        neonDataBase
 ```
 
 - **Cenário (I):**
@@ -18,6 +18,32 @@ Este projeto automatiza a prospecção ativa de clientes (SDR Automatizado) para
   - **Notion**: Recebe e organiza os dados enviados da API Google Places, servindo como um banco de dados e uma plataforma de gerenciamento de informações.
 
 ## Como Iniciar a Aplicação
+
+- ### Pré-requisitos
+  Antes de começar, você vai precisar do [Git](https://git-scm.com/install/) e do [Python](https://www.python.org/downloads/) instalados em sua máquina.
+
+- ### Passo a Passo
+
+1. **Clone o repositório:**
+
+     ```bash
+     git clone https://github.com/ZeniteTech/LGA
+     ```
+
+2. **Instale as dependências:**
+   ```bash
+    pip install -r requirements.txt
+   ```
+
+4. **Entre no diretório do projeto:**
+   ```bash
+   cd LGA
+   ```
+5. **Execute o programa:**
+   
+    ```bash
+    python -m streamlit run frontend/app.py
+    ```
 
 **Acesse o link abaixo:**  
 https://leadgenautomation.streamlit.app/
