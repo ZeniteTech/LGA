@@ -11,6 +11,7 @@ def lga_viewer():
     # 1. Caixa de texto e Botão de Busca
     query = st.text_input("Digite sua query de busca (ex: Escritórios de Advocacia em Limeira):")
     botao_buscar = st.button("Buscar Leads")
+    filtro_buscar_semSite = st.checkbox("Apenas Empresas sem Sites")
 
     # Inicializa um estado para guardar os leads entre cliques de botões
     if "leads" not in st.session_state:
@@ -23,11 +24,17 @@ def lga_viewer():
 
     # 2. Listagem dos resultados com opção de seleção
     if st.session_state.leads:
-        st.write(f"### Foram encontrados {len(st.session_state.leads)} leads:")
-        
+
+        leads = st.session_state.leads
+        st.write(f"### Foram encontrados {len(leads)} leads")
+
+        if filtro_buscar_semSite:
+            leads = [lead for lead in leads if not lead.get('websiteUri')]
+            if filtro_buscar_semSite is True:
+                st.write(f"#### E {len(leads)} empresas sem site")
         leads_selecionados = []
         
-        for i, empresa in enumerate(st.session_state.leads):
+        for i, empresa in enumerate(leads):
             nome = empresa.get('displayName', {}).get('text', 'Sem Nome')
             site = empresa.get('websiteUri')  # Pegamos bruto para validar abaixo
             telefone = empresa.get('nationalPhoneNumber', 'Sem telefone')
