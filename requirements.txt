@@ -1,6 +1,4 @@
 streamlit
 requests
 python-dotenv
-SQLAlchemy
-psycopg[binary]
-psycopg2
+
