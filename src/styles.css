@@ -1,0 +1,198 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * LeadGen Automation (LGA) — ZenithTech design system.
+ * Dark-first, minimal, technological. All colors are oklch tokens.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* #0F172A */
+  --background: oklch(0.2274 0.0421 264.53);
+  /* #F8FAFC */
+  --foreground: oklch(0.9842 0.0034 247.86);
+  /* #111827 */
+  --surface: oklch(0.2178 0.0335 265.75);
+  /* #1E293B */
+  --card: oklch(0.2795 0.0368 260.03);
+  --card-foreground: oklch(0.9842 0.0034 247.86);
+  --popover: oklch(0.2795 0.0368 260.03);
+  --popover-foreground: oklch(0.9842 0.0034 247.86);
+  /* #2563EB */
+  --primary: oklch(0.5461 0.2152 262.88);
+  --primary-foreground: oklch(0.9842 0.0034 247.86);
+  /* #3B82F6 */
+  --secondary: oklch(0.6231 0.188 259.81);
+  --secondary-foreground: oklch(0.9842 0.0034 247.86);
+  --muted: oklch(0.3 0.035 261);
+  /* #94A3B8 */
+  --muted-foreground: oklch(0.7107 0.0351 256.79);
+  --accent: oklch(0.33 0.04 261);
+  --accent-foreground: oklch(0.9842 0.0034 247.86);
+  /* #EF4444 */
+  --destructive: oklch(0.6368 0.2078 25.33);
+  --destructive-foreground: oklch(0.9842 0.0034 247.86);
+  /* #22C55E */
+  --success: oklch(0.7227 0.192 149.58);
+  --success-foreground: oklch(0.2274 0.0421 264.53);
+  /* #F59E0B */
+  --warning: oklch(0.7686 0.1647 70.08);
+  --warning-foreground: oklch(0.2274 0.0421 264.53);
+
+  --border: oklch(1 0 0 / 9%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.5461 0.2152 262.88);
+
+  --chart-1: oklch(0.5461 0.2152 262.88);
+  --chart-2: oklch(0.6231 0.188 259.81);
+  --chart-3: oklch(0.7227 0.192 149.58);
+  --chart-4: oklch(0.7686 0.1647 70.08);
+  --chart-5: oklch(0.7107 0.0351 256.79);
+
+  --sidebar: oklch(0.2178 0.0335 265.75);
+  --sidebar-foreground: oklch(0.9842 0.0034 247.86);
+  --sidebar-primary: oklch(0.5461 0.2152 262.88);
+  --sidebar-primary-foreground: oklch(0.9842 0.0034 247.86);
+  --sidebar-accent: oklch(0.2795 0.0368 260.03);
+  --sidebar-accent-foreground: oklch(0.9842 0.0034 247.86);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.5461 0.2152 262.88);
+
+  --gradient-primary: linear-gradient(135deg, var(--primary), var(--secondary));
+  --gradient-surface: linear-gradient(
+    160deg,
+    color-mix(in oklab, var(--card) 92%, transparent),
+    color-mix(in oklab, var(--surface) 96%, transparent)
+  );
+  --shadow-elegant: 0 24px 60px -30px oklch(0 0 0 / 0.8);
+  --shadow-glow: 0 0 0 1px color-mix(in oklab, var(--primary) 30%, transparent),
+    0 18px 50px -24px color-mix(in oklab, var(--primary) 70%, transparent);
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--primary) 40%, transparent);
+  }
+}
+
+@utility surface-card {
+  background-image: var(--gradient-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-elegant);
+}
+
+@utility glow-ring {
+  box-shadow: var(--shadow-glow);
+}
+
+@utility grid-backdrop {
+  background-image:
+    radial-gradient(
+      circle at 20% 0%,
+      color-mix(in oklab, var(--primary) 22%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 85% 15%,
+      color-mix(in oklab, var(--secondary) 16%, transparent),
+      transparent 50%
+    ),
+    linear-gradient(var(--color-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    100% 100%,
+    64px 64px,
+    64px 64px;
+}
+
+@utility text-gradient {
+  background-image: var(--gradient-primary);
+  background-clip: text;
+  color: transparent;
+}
+
+@utility hover-lift {
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+  &:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in oklab, var(--primary) 45%, transparent);
+    box-shadow: var(--shadow-glow);
+  }
+}

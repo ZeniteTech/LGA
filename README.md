@@ -1,23 +1,29 @@
-# LeadGen Automation (LGA)
+# Welcome to your Lovable project
 
-Este projeto automatiza a prospecção ativa de clientes (SDR Automatizado) para a nossa software house. Ele extrai dados de empresas locais em tempo real, organiza e centraliza essas informações no Notion e utiliza Inteligência Artificial para gerar propostas comerciais personalizadas e scores de fechamento.
+This project was built with [Lovable](https://lovable.dev).
 
-<h2>Fluxograma do Processo</h2>
+## Build with Lovable
 
-```text
-                          (II)
-        API Google Places -> Claude -> Notion
-         |  (I)
-         v
-        Notion
+Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+
+- **Ship faster**: describe what you want to build and Lovable handles the code.
+- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
+- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+
+## Development
+
+Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+
+```sh
+git clone <this-repository-url>
+cd <repository-name>
+npm i
+npm run dev
 ```
 
-- **Cenário (I):**
+## Built with
 
-  - **API do Google Places**: Salva os dados brutos das empresas no Notion.
-  - **Notion**: Recebe e organiza os dados enviados da API Google Places, servindo como um banco de dados e uma plataforma de gerenciamento de informações.
-
-## Como Iniciar a Aplicação
-
-**Acesse o link abaixo:**  
-https://leadgenautomation.streamlit.app/
+- TanStack Start
+- TypeScript
+- React
+- Tailwind CSS
