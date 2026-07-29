@@ -30,7 +30,6 @@ export const Route = createFileRoute("/login")({
 function LoginPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -81,7 +80,7 @@ function LoginPage() {
               <Lock className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 id="senha"
-                type={"text"}
+                type={"password"}
                 required
                 defaultValue=""
                 className="h-11 pl-9"
