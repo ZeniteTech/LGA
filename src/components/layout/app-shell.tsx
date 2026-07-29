@@ -38,7 +38,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { to: "/", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/buscar", label: "Buscar Leads", icon: Search },
   { to: "/empresas", label: "Empresas", icon: Building2 },
   { to: "/pipeline", label: "Pipeline", icon: KanbanSquare },
@@ -56,7 +56,7 @@ const notifications = [
 
 function Logo({ compact }: { compact?: boolean }) {
   return (
-    <Link to="/" className="flex min-w-0 items-center gap-2.5">
+    <Link to="/dashboard" className="flex min-w-0 items-center gap-2.5">
       <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-primary/15 text-primary glow-ring">
         <Sparkles className="size-4.5" />
       </span>
@@ -78,7 +78,7 @@ function SidebarNav({ collapsed, onNavigate }: { collapsed: boolean; onNavigate?
   return (
     <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-3 py-4">
       {navItems.map((item) => {
-        const active = item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
+        const active = item.to === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(item.to);
         const link = (
           <Link
             key={item.to}
@@ -252,7 +252,7 @@ export function AppShell({
                   aria-label="Breadcrumb"
                   className="hidden min-w-0 items-center gap-1.5 text-sm text-muted-foreground md:flex"
                 >
-                  <Link to="/" className="transition-colors hover:text-foreground">
+                  <Link to="/dashboard" className="transition-colors hover:text-foreground">
                     LGA
                   </Link>
                   {crumbs.map((c) => (
