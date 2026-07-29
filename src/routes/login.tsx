@@ -37,7 +37,7 @@ function LoginPage() {
     setTimeout(() => {
       setLoading(false);
       toast.success("Bem-vindo de volta, Rafael");
-      navigate({ to: "/" });
+      navigate({ to: "/dashboard" });
     }, 900);
   }
 
