@@ -10,45 +10,26 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as BuscarRouteImport } from './routes/buscar'
-import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
-import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as HistoricoRouteImport } from './routes/historico'
-import { Route as IaRouteImport } from './routes/ia'
+import { Route as AuthenticatedRouteImport } from './routes/authenticated'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as PerfilRouteImport } from './routes/perfil'
-import { Route as PipelineRouteImport } from './routes/pipeline'
-import { Route as EmpresasIndexRouteImport } from './routes/empresas.index'
-import { Route as EmpresasCompanyIdRouteImport } from './routes/empresas.$companyId'
+import { Route as AuthenticatedBuscarRouteImport } from './routes/authenticated/buscar'
+import { Route as AuthenticatedConfiguracoesRouteImport } from './routes/authenticated/configuracoes'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/authenticated/dashboard'
+import { Route as AuthenticatedHistoricoRouteImport } from './routes/authenticated/historico'
+import { Route as AuthenticatedIaRouteImport } from './routes/authenticated/ia'
+import { Route as AuthenticatedPerfilRouteImport } from './routes/authenticated/perfil'
+import { Route as AuthenticatedPipelineRouteImport } from './routes/authenticated/pipeline'
+import { Route as AuthenticatedEmpresasIndexRouteImport } from './routes/authenticated/empresas.index'
+import { Route as AuthenticatedEmpresasCompanyIdRouteImport } from './routes/authenticated/empresas.$companyId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BuscarRoute = BuscarRouteImport.update({
-  id: '/buscar',
-  path: '/buscar',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
-  id: '/configuracoes',
-  path: '/configuracoes',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HistoricoRoute = HistoricoRouteImport.update({
-  id: '/historico',
-  path: '/historico',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IaRoute = IaRouteImport.update({
-  id: '/ia',
-  path: '/ia',
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/authenticated',
+  path: '/authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -56,121 +37,147 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PerfilRoute = PerfilRouteImport.update({
+const AuthenticatedBuscarRoute = AuthenticatedBuscarRouteImport.update({
+  id: '/buscar',
+  path: '/buscar',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedConfiguracoesRoute =
+  AuthenticatedConfiguracoesRouteImport.update({
+    id: '/configuracoes',
+    path: '/configuracoes',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedHistoricoRoute = AuthenticatedHistoricoRouteImport.update({
+  id: '/historico',
+  path: '/historico',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedIaRoute = AuthenticatedIaRouteImport.update({
+  id: '/ia',
+  path: '/ia',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedPerfilRoute = AuthenticatedPerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
-const PipelineRoute = PipelineRouteImport.update({
+const AuthenticatedPipelineRoute = AuthenticatedPipelineRouteImport.update({
   id: '/pipeline',
   path: '/pipeline',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
-const EmpresasIndexRoute = EmpresasIndexRouteImport.update({
-  id: '/empresas/',
-  path: '/empresas/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EmpresasCompanyIdRoute = EmpresasCompanyIdRouteImport.update({
-  id: '/empresas/$companyId',
-  path: '/empresas/$companyId',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const AuthenticatedEmpresasIndexRoute =
+  AuthenticatedEmpresasIndexRouteImport.update({
+    id: '/empresas/',
+    path: '/empresas/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedEmpresasCompanyIdRoute =
+  AuthenticatedEmpresasCompanyIdRouteImport.update({
+    id: '/empresas/$companyId',
+    path: '/empresas/$companyId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/buscar': typeof BuscarRoute
-  '/configuracoes': typeof ConfiguracoesRoute
-  '/dashboard': typeof DashboardRoute
-  '/historico': typeof HistoricoRoute
-  '/ia': typeof IaRoute
+  '/authenticated': typeof AuthenticatedRouteWithChildren
   '/login': typeof LoginRoute
-  '/perfil': typeof PerfilRoute
-  '/pipeline': typeof PipelineRoute
-  '/empresas/$companyId': typeof EmpresasCompanyIdRoute
-  '/empresas/': typeof EmpresasIndexRoute
+  '/authenticated/buscar': typeof AuthenticatedBuscarRoute
+  '/authenticated/configuracoes': typeof AuthenticatedConfiguracoesRoute
+  '/authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/authenticated/historico': typeof AuthenticatedHistoricoRoute
+  '/authenticated/ia': typeof AuthenticatedIaRoute
+  '/authenticated/perfil': typeof AuthenticatedPerfilRoute
+  '/authenticated/pipeline': typeof AuthenticatedPipelineRoute
+  '/authenticated/empresas/$companyId': typeof AuthenticatedEmpresasCompanyIdRoute
+  '/authenticated/empresas/': typeof AuthenticatedEmpresasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/buscar': typeof BuscarRoute
-  '/configuracoes': typeof ConfiguracoesRoute
-  '/dashboard': typeof DashboardRoute
-  '/historico': typeof HistoricoRoute
-  '/ia': typeof IaRoute
+  '/authenticated': typeof AuthenticatedRouteWithChildren
   '/login': typeof LoginRoute
-  '/perfil': typeof PerfilRoute
-  '/pipeline': typeof PipelineRoute
-  '/empresas/$companyId': typeof EmpresasCompanyIdRoute
-  '/empresas': typeof EmpresasIndexRoute
+  '/authenticated/buscar': typeof AuthenticatedBuscarRoute
+  '/authenticated/configuracoes': typeof AuthenticatedConfiguracoesRoute
+  '/authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/authenticated/historico': typeof AuthenticatedHistoricoRoute
+  '/authenticated/ia': typeof AuthenticatedIaRoute
+  '/authenticated/perfil': typeof AuthenticatedPerfilRoute
+  '/authenticated/pipeline': typeof AuthenticatedPipelineRoute
+  '/authenticated/empresas/$companyId': typeof AuthenticatedEmpresasCompanyIdRoute
+  '/authenticated/empresas': typeof AuthenticatedEmpresasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/buscar': typeof BuscarRoute
-  '/configuracoes': typeof ConfiguracoesRoute
-  '/dashboard': typeof DashboardRoute
-  '/historico': typeof HistoricoRoute
-  '/ia': typeof IaRoute
+  '/authenticated': typeof AuthenticatedRouteWithChildren
   '/login': typeof LoginRoute
-  '/perfil': typeof PerfilRoute
-  '/pipeline': typeof PipelineRoute
-  '/empresas/$companyId': typeof EmpresasCompanyIdRoute
-  '/empresas/': typeof EmpresasIndexRoute
+  '/authenticated/buscar': typeof AuthenticatedBuscarRoute
+  '/authenticated/configuracoes': typeof AuthenticatedConfiguracoesRoute
+  '/authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/authenticated/historico': typeof AuthenticatedHistoricoRoute
+  '/authenticated/ia': typeof AuthenticatedIaRoute
+  '/authenticated/perfil': typeof AuthenticatedPerfilRoute
+  '/authenticated/pipeline': typeof AuthenticatedPipelineRoute
+  '/authenticated/empresas/$companyId': typeof AuthenticatedEmpresasCompanyIdRoute
+  '/authenticated/empresas/': typeof AuthenticatedEmpresasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/buscar'
-    | '/configuracoes'
-    | '/dashboard'
-    | '/historico'
-    | '/ia'
+    | '/authenticated'
     | '/login'
-    | '/perfil'
-    | '/pipeline'
-    | '/empresas/$companyId'
-    | '/empresas/'
+    | '/authenticated/buscar'
+    | '/authenticated/configuracoes'
+    | '/authenticated/dashboard'
+    | '/authenticated/historico'
+    | '/authenticated/ia'
+    | '/authenticated/perfil'
+    | '/authenticated/pipeline'
+    | '/authenticated/empresas/$companyId'
+    | '/authenticated/empresas/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/buscar'
-    | '/configuracoes'
-    | '/dashboard'
-    | '/historico'
-    | '/ia'
+    | '/authenticated'
     | '/login'
-    | '/perfil'
-    | '/pipeline'
-    | '/empresas/$companyId'
-    | '/empresas'
+    | '/authenticated/buscar'
+    | '/authenticated/configuracoes'
+    | '/authenticated/dashboard'
+    | '/authenticated/historico'
+    | '/authenticated/ia'
+    | '/authenticated/perfil'
+    | '/authenticated/pipeline'
+    | '/authenticated/empresas/$companyId'
+    | '/authenticated/empresas'
   id:
     | '__root__'
     | '/'
-    | '/buscar'
-    | '/configuracoes'
-    | '/dashboard'
-    | '/historico'
-    | '/ia'
+    | '/authenticated'
     | '/login'
-    | '/perfil'
-    | '/pipeline'
-    | '/empresas/$companyId'
-    | '/empresas/'
+    | '/authenticated/buscar'
+    | '/authenticated/configuracoes'
+    | '/authenticated/dashboard'
+    | '/authenticated/historico'
+    | '/authenticated/ia'
+    | '/authenticated/perfil'
+    | '/authenticated/pipeline'
+    | '/authenticated/empresas/$companyId'
+    | '/authenticated/empresas/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  BuscarRoute: typeof BuscarRoute
-  ConfiguracoesRoute: typeof ConfiguracoesRoute
-  DashboardRoute: typeof DashboardRoute
-  HistoricoRoute: typeof HistoricoRoute
-  IaRoute: typeof IaRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   LoginRoute: typeof LoginRoute
-  PerfilRoute: typeof PerfilRoute
-  PipelineRoute: typeof PipelineRoute
-  EmpresasCompanyIdRoute: typeof EmpresasCompanyIdRoute
-  EmpresasIndexRoute: typeof EmpresasIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -182,39 +189,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/buscar': {
-      id: '/buscar'
-      path: '/buscar'
-      fullPath: '/buscar'
-      preLoaderRoute: typeof BuscarRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/configuracoes': {
-      id: '/configuracoes'
-      path: '/configuracoes'
-      fullPath: '/configuracoes'
-      preLoaderRoute: typeof ConfiguracoesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/historico': {
-      id: '/historico'
-      path: '/historico'
-      fullPath: '/historico'
-      preLoaderRoute: typeof HistoricoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ia': {
-      id: '/ia'
-      path: '/ia'
-      fullPath: '/ia'
-      preLoaderRoute: typeof IaRouteImport
+    '/authenticated': {
+      id: '/authenticated'
+      path: '/authenticated'
+      fullPath: '/authenticated'
+      preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -224,49 +203,104 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/perfil': {
-      id: '/perfil'
+    '/authenticated/buscar': {
+      id: '/authenticated/buscar'
+      path: '/buscar'
+      fullPath: '/authenticated/buscar'
+      preLoaderRoute: typeof AuthenticatedBuscarRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/authenticated/configuracoes': {
+      id: '/authenticated/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/authenticated/configuracoes'
+      preLoaderRoute: typeof AuthenticatedConfiguracoesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/authenticated/dashboard': {
+      id: '/authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/authenticated/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/authenticated/historico': {
+      id: '/authenticated/historico'
+      path: '/historico'
+      fullPath: '/authenticated/historico'
+      preLoaderRoute: typeof AuthenticatedHistoricoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/authenticated/ia': {
+      id: '/authenticated/ia'
+      path: '/ia'
+      fullPath: '/authenticated/ia'
+      preLoaderRoute: typeof AuthenticatedIaRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/authenticated/perfil': {
+      id: '/authenticated/perfil'
       path: '/perfil'
-      fullPath: '/perfil'
-      preLoaderRoute: typeof PerfilRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/authenticated/perfil'
+      preLoaderRoute: typeof AuthenticatedPerfilRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/pipeline': {
-      id: '/pipeline'
+    '/authenticated/pipeline': {
+      id: '/authenticated/pipeline'
       path: '/pipeline'
-      fullPath: '/pipeline'
-      preLoaderRoute: typeof PipelineRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/authenticated/pipeline'
+      preLoaderRoute: typeof AuthenticatedPipelineRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/empresas/': {
-      id: '/empresas/'
+    '/authenticated/empresas/': {
+      id: '/authenticated/empresas/'
       path: '/empresas'
-      fullPath: '/empresas/'
-      preLoaderRoute: typeof EmpresasIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/authenticated/empresas/'
+      preLoaderRoute: typeof AuthenticatedEmpresasIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/empresas/$companyId': {
-      id: '/empresas/$companyId'
+    '/authenticated/empresas/$companyId': {
+      id: '/authenticated/empresas/$companyId'
       path: '/empresas/$companyId'
-      fullPath: '/empresas/$companyId'
-      preLoaderRoute: typeof EmpresasCompanyIdRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/authenticated/empresas/$companyId'
+      preLoaderRoute: typeof AuthenticatedEmpresasCompanyIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedBuscarRoute: typeof AuthenticatedBuscarRoute
+  AuthenticatedConfiguracoesRoute: typeof AuthenticatedConfiguracoesRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedHistoricoRoute: typeof AuthenticatedHistoricoRoute
+  AuthenticatedIaRoute: typeof AuthenticatedIaRoute
+  AuthenticatedPerfilRoute: typeof AuthenticatedPerfilRoute
+  AuthenticatedPipelineRoute: typeof AuthenticatedPipelineRoute
+  AuthenticatedEmpresasCompanyIdRoute: typeof AuthenticatedEmpresasCompanyIdRoute
+  AuthenticatedEmpresasIndexRoute: typeof AuthenticatedEmpresasIndexRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedBuscarRoute: AuthenticatedBuscarRoute,
+  AuthenticatedConfiguracoesRoute: AuthenticatedConfiguracoesRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedHistoricoRoute: AuthenticatedHistoricoRoute,
+  AuthenticatedIaRoute: AuthenticatedIaRoute,
+  AuthenticatedPerfilRoute: AuthenticatedPerfilRoute,
+  AuthenticatedPipelineRoute: AuthenticatedPipelineRoute,
+  AuthenticatedEmpresasCompanyIdRoute: AuthenticatedEmpresasCompanyIdRoute,
+  AuthenticatedEmpresasIndexRoute: AuthenticatedEmpresasIndexRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  BuscarRoute: BuscarRoute,
-  ConfiguracoesRoute: ConfiguracoesRoute,
-  DashboardRoute: DashboardRoute,
-  HistoricoRoute: HistoricoRoute,
-  IaRoute: IaRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
   LoginRoute: LoginRoute,
-  PerfilRoute: PerfilRoute,
-  PipelineRoute: PipelineRoute,
-  EmpresasCompanyIdRoute: EmpresasCompanyIdRoute,
-  EmpresasIndexRoute: EmpresasIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

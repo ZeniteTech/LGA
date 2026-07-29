@@ -1,12 +1,13 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ArrowRight, Loader2, Lock, Mail, Sparkles } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {z} from "zod";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
@@ -27,19 +28,76 @@ export const Route = createFileRoute("/login")({
   component: LoginPage,
 });
 
+const API_SPRING_URL = "http://localhost:8080/auth/login";
+
+const schema = z
+.object({
+  email: z.string().trim().email("E-mail inválido").max(255),
+  password: z.string().trim().min(6, "Informe sua senha").max(100),
+});
+
 function LoginPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  function submit(e: React.FormEvent) {
-    e.preventDefault();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      toast.success("Bem-vindo de volta, Rafael");
-      navigate({ to: "/dashboard" });
-    }, 900);
-  }
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+  }, []);
+
+ async function Onsubmit(e: React.FormEvent<HTMLFormElement>) {
+     e.preventDefault();
+     const form = e.currentTarget;
+     const formData = new FormData(form);
+ 
+     const rawData = {
+       email: formData.get("email"),
+       password: formData.get("password"),
+     };
+ 
+     const parsed = schema.safeParse(rawData);
+ 
+     if (!parsed.success) {
+       toast.error(parsed.error.issues[0]?.message ?? "Verifique os campos");
+       return;
+     }
+ 
+     setLoading(true);
+     const {email, password} = parsed.data;
+ 
+     try{
+       const response = await fetch(API_SPRING_URL, {
+         method: "POST",
+         headers: {
+           "Content-Type": "application/json",
+         },
+         body: JSON.stringify({
+           email,
+           password,
+         }),
+       })
+ 
+       if (!response.ok) {  
+           throw new Error(`Erro no servidor: Status ${response.status}`);
+         }
+
+         const data = await response.json();
+
+         const token = data.token || data.tokenjwt || data.acessToken;
+
+         if(token){
+          localStorage.setItem("token", token);
+         }
+ 
+         toast.success("Login efetuado com sucesso!");
+         navigate({ to: "/authenticated/dashboard" });
+       } catch (error) {
+       console.error("Falha ao logar:", error);
+       toast.error("Erro ao logar"); 
+       
+     } finally {
+       setLoading(false);
+     }
+   }
 
   return (
     <div className="grid-backdrop relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-10">
@@ -59,13 +117,14 @@ function LoginPage() {
           Prospecção inteligente, do primeiro lead ao contrato fechado.
         </p>
 
-        <form onSubmit={submit} className="mt-7 space-y-4">
+        <form onSubmit={Onsubmit} className="mt-7 space-y-4">
           <div className="space-y-1.5">
             <Label htmlFor="email">E-mail corporativo</Label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 id="email"
+                name="email"
                 type="email"
                 required
                 defaultValue=""
@@ -75,11 +134,12 @@ function LoginPage() {
             </div>
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="senha">Senha</Label>
+            <Label htmlFor="password">Senha</Label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
-                id="senha"
+                id="password"
+                name="password"
                 type={"password"}
                 required
                 defaultValue=""

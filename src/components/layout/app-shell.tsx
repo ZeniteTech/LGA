@@ -1,4 +1,4 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   Bell,
   Bot,
@@ -38,14 +38,14 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/buscar", label: "Buscar Leads", icon: Search },
-  { to: "/empresas", label: "Empresas", icon: Building2 },
-  { to: "/pipeline", label: "Pipeline", icon: KanbanSquare },
-  { to: "/ia", label: "IA", icon: Bot },
-  { to: "/historico", label: "Histórico", icon: History },
-  { to: "/configuracoes", label: "Configurações", icon: Settings },
-  { to: "/perfil", label: "Perfil", icon: User },
+  { to: "/authenticated/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/authenticated/buscar", label: "Buscar Leads", icon: Search },
+  { to: "/authenticated/empresas", label: "Empresas", icon: Building2 },
+  { to: "/authenticated/pipeline", label: "Pipeline", icon: KanbanSquare },
+  { to: "/authenticated/ia", label: "IA", icon: Bot },
+  { to: "/authenticated/historico", label: "Histórico", icon: History },
+  { to: "/authenticated/configuracoes", label: "Configurações", icon: Settings },
+  { to: "/authenticated/perfil", label: "Perfil", icon: User },
 ] as const;
 
 const notifications = [
@@ -56,7 +56,7 @@ const notifications = [
 
 function Logo({ compact }: { compact?: boolean }) {
   return (
-    <Link to="/dashboard" className="flex min-w-0 items-center gap-2.5">
+    <Link to="/authenticated/dashboard" className="flex min-w-0 items-center gap-2.5">
       <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-primary/15 text-primary glow-ring">
         <Sparkles className="size-4.5" />
       </span>
@@ -78,7 +78,7 @@ function SidebarNav({ collapsed, onNavigate }: { collapsed: boolean; onNavigate?
   return (
     <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-3 py-4">
       {navItems.map((item) => {
-        const active = item.to === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(item.to);
+        const active = item.to === "/authenticated/dashboard" ? pathname === "/authenticated/dashboard" : pathname.startsWith(item.to);
         const link = (
           <Link
             key={item.to}
@@ -120,7 +120,7 @@ function SidebarNav({ collapsed, onNavigate }: { collapsed: boolean; onNavigate?
   );
 }
 
-function SidebarFooter({ collapsed }: { collapsed: boolean }) {
+function SidebarFooter({ collapsed, onLogout }: { collapsed: boolean; onLogout: () => void }) {
   return (
     <div className="border-t border-sidebar-border p-3">
       {!collapsed && (
@@ -132,8 +132,9 @@ function SidebarFooter({ collapsed }: { collapsed: boolean }) {
           <p className="mt-2 text-[11px] text-muted-foreground">6.800 de 10.000 requisições</p>
         </div>
       )}
-      <Link
-        to="/login"
+      <button
+        type="button"
+        onClick={onLogout}
         className={cn(
           "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive",
           collapsed && "justify-center px-0",
@@ -141,7 +142,7 @@ function SidebarFooter({ collapsed }: { collapsed: boolean }) {
       >
         <LogOut className="size-4.5 shrink-0" />
         {!collapsed && "Sair"}
-      </Link>
+      </button>
     </div>
   );
 }
@@ -167,8 +168,15 @@ export function AppShell({
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
 
   useEffect(() => setMobileOpen(false), [pathname]);
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+    toast.success("Sessão encerrada com sucesso");
+    navigate({ to: "/login", replace: true });
+  }
 
   return (
     <TooltipProvider delayDuration={150}>
@@ -200,7 +208,7 @@ export function AppShell({
             )}
           </div>
           <SidebarNav collapsed={collapsed} />
-          <SidebarFooter collapsed={collapsed} />
+          <SidebarFooter collapsed={collapsed} onLogout={handleLogout} />
           {collapsed && (
             <Button
               variant="ghost"
@@ -230,7 +238,7 @@ export function AppShell({
                 </Button>
               </div>
               <SidebarNav collapsed={false} onNavigate={() => setMobileOpen(false)} />
-              <SidebarFooter collapsed={false} />
+              <SidebarFooter collapsed={false} onLogout={handleLogout}/>
             </div>
           </div>
         )}
@@ -252,7 +260,7 @@ export function AppShell({
                   aria-label="Breadcrumb"
                   className="hidden min-w-0 items-center gap-1.5 text-sm text-muted-foreground md:flex"
                 >
-                  <Link to="/dashboard" className="transition-colors hover:text-foreground">
+                  <Link to="/authenticated/dashboard" className="transition-colors hover:text-foreground">
                     LGA
                   </Link>
                   {crumbs.map((c) => (
@@ -282,7 +290,7 @@ export function AppShell({
 
               <div className="flex shrink-0 items-center gap-1.5">
                 <Button asChild size="sm" className="hidden gap-1.5 sm:inline-flex">
-                  <Link to="/buscar">
+                  <Link to="/authenticated/buscar">
                     <Plus className="size-4" />
                     Nova Pesquisa
                   </Link>
@@ -340,12 +348,12 @@ export function AppShell({
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
-                      <Link to="/perfil">
+                      <Link to="/authenticated/perfil">
                         <User className="mr-2 size-4" /> Perfil
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to="/configuracoes">
+                      <Link to="/authenticated/configuracoes">
                         <Settings className="mr-2 size-4" /> Configurações
                       </Link>
                     </DropdownMenuItem>
@@ -355,10 +363,10 @@ export function AppShell({
                       </a>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild className="text-destructive focus:text-destructive">
-                      <Link to="/login">
+                    <DropdownMenuItem 
+                    onClick={handleLogout}
+                    asChild className="text-destructive focus:text-destructive">
                         <LogOut className="mr-2 size-4" /> Sair
-                      </Link>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
