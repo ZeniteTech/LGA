@@ -28,7 +28,7 @@ export const Route = createFileRoute("/login")({
   component: LoginPage,
 });
 
-const API_SPRING_URL = "http://localhost:8080/auth/login";
+const API_SPRING_URL = "https://lgaapi-production.up.railway.app/auth/login";
 
 const schema = z
 .object({
