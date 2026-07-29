@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { z } from "zod";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,19 +28,73 @@ export const Route = createFileRoute("/")({
   component: RegisterPage,
 });
 
+const API_SPRING_URL = "http://localhost:8080/auth/register";
+
+const schema = z
+.object({
+  name: z.string().trim().min(3, "Informe seu nome").max(100),
+  email: z.string().trim().email("E-mail inválido").max(255),
+  password: z.string().trim().min(6, "Informe sua senha").max(100),
+  confirmPassword: z.string().trim().min(1, "Confirme sua senha"),
+})
+.refine((data) => data.password === data.confirmPassword, {
+  message: "As senhas não coincidem",
+  path: ["confirmPassword"],
+});
+
 function RegisterPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  function submit(e: React.FormEvent) {
+  async function Onsubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const rawData = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      password: formData.get("password"),
+      confirmPassword: formData.get("confirmPassword"),
+    };
+
+    const parsed = schema.safeParse(rawData);
+
+    if (!parsed.success) {
+      toast.error(parsed.error.issues[0]?.message ?? "Verifique os campos");
+      return;
+    }
+
     setLoading(true);
-    setTimeout(() => {
+    const {name, email, password} = parsed.data;
+
+    try{
+      const response = await fetch(API_SPRING_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      })
+
+      if (!response.ok) {
+            throw new Error(`Erro no servidor: Status ${response.status}`);
+          }
+
+        toast.success("Conta criada com sucesso!");
+        navigate({ to: "/login" });
+      } catch (error) {
+      console.error("Falha ao salvar Usuário:", error);
+      
+      form.reset();
+    } finally {
       setLoading(false);
-      toast.success("Conta criada com sucesso!");
-      navigate({ to: "/" });
-    }, 900);
+    }
   }
 
   return (
@@ -60,13 +115,14 @@ function RegisterPage() {
           Prospecção inteligente, do primeiro lead ao contrato fechado.
         </p>
 
-        <form onSubmit={submit} className="mt-4 space-y-3">
+        <form onSubmit={Onsubmit} className="mt-4 space-y-3">
           <div className="space-y-1">
-            <Label htmlFor="nome" className="text-xs">Nome completo</Label>
+            <Label htmlFor="name" className="text-xs">Nome completo</Label>
             <div className="relative">
               <User className="absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
               <Input
-                id="nome"
+                id="name"
+                name="name"
                 type="text"
                 required
                 className="h-9 pl-8 text-xs"
@@ -81,6 +137,7 @@ function RegisterPage() {
               <Input
                 id="email"
                 type="email"
+                name="email"
                 required
                 defaultValue=""
                 className="h-9 pl-8 text-xs"
@@ -89,11 +146,12 @@ function RegisterPage() {
             </div>
           </div>
           <div className="space-y-1">
-            <Label htmlFor="senha" className="text-xs">Senha</Label>
+            <Label htmlFor="password" className="text-xs">Senha</Label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
               <Input
-                id="senha"
+                id="password"
+                name="password"
                 type={showPassword ? "text" : "password"}
                 required
                 defaultValue=""
@@ -109,6 +167,7 @@ function RegisterPage() {
               <Input
                 id="confirmar-senha"
                 type={showPassword ? "text" : "password"}
+                name="confirmPassword"
                 required
                 defaultValue=""
                 className="h-9 pl-8 text-xs"
