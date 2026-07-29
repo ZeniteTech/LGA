@@ -83,13 +83,15 @@ function RegisterPage() {
       })
 
       if (!response.ok) {
-            throw new Error(`Erro no servidor: Status ${response.status}`);
-          }
+          toast.error("Erro ao criar conta");    
+          throw new Error(`Erro no servidor: Status ${response.status}`);
+        }
 
         toast.success("Conta criada com sucesso!");
         navigate({ to: "/login" });
       } catch (error) {
       console.error("Falha ao salvar Usuário:", error);
+      toast.error("Erro ao criar conta"); 
       
       form.reset();
     } finally {
