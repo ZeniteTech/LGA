@@ -120,13 +120,6 @@ function RegisterPage() {
             <label className="flex cursor-pointer items-center gap-2 text-xs text-muted-foreground">
               <Checkbox /> Exibir Senha
             </label>
-            <button
-              type="button"
-              onClick={() => toast("Enviamos um link de recuperação para seu e-mail")}
-              className="text-xs text-primary transition-opacity hover:opacity-80"
-            >
-              Esqueci a senha
-            </button>
           </div>
 
           <Button type="submit" className="h-9 w-full gap-2 text-xs" disabled={loading}>
