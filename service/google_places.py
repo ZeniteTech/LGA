@@ -2,7 +2,7 @@ import requests
 import time
 
 # from config.settings import GOOGLE_API_KEY
-from config.settings import settings
+from config.enterprise import settings
 
 URL = "https://places.googleapis.com/v1/places:searchText"
 

@@ -1,12 +1,12 @@
 from fastapi import APIRouter
 from service.google_places import buscar_empresas
 
-router = APIRouter(prefix="/enterprise")
+router = APIRouter(prefix="/enterprise", tags=["Enterprise"])
 
 @router.get("/search_leads")
-def buscar_leads(cidade: str):
+def enterprise_route(nichoEmpresa_cidade: str):
     
-    resultado = buscar_empresas(cidade)
+    resultado = buscar_empresas(nichoEmpresa_cidade)
     return resultado 
 
   

@@ -1,12 +1,15 @@
-import streamlit as st
-from viewer.lga_viewer import lga_viewer
-from viewer.login_viewer import login
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from route.enterprise import router as enterprise_route
 
+app = FastAPI()
 
-def main():
-    if login():
-        lga_viewer()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:8080"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-
-if __name__ == "__main__":
-    main()
+app.include_router(enterprise_route)
