@@ -1,6 +1,5 @@
-import requests
 import time
-
+import requests
 # from config.settings import GOOGLE_API_KEY
 from config.enterprise import settings
 
