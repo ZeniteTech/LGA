@@ -30,6 +30,7 @@ export const Route = createFileRoute("/login")({
 function LoginPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -68,7 +69,7 @@ function LoginPage() {
                 id="email"
                 type="email"
                 required
-                defaultValue="rafael@zenithtech.com"
+                defaultValue=""
                 className="h-11 pl-9"
                 placeholder="voce@empresa.com"
               />
@@ -80,9 +81,9 @@ function LoginPage() {
               <Lock className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 id="senha"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 required
-                defaultValue="zenithtech"
+                defaultValue=""
                 className="h-11 pl-9"
                 placeholder="••••••••"
               />
@@ -90,13 +91,10 @@ function LoginPage() {
           </div>
 
           <div className="flex items-center justify-between">
-            <label className="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground">
-              <Checkbox defaultChecked /> Lembrar de mim
-            </label>
             <button
               type="button"
               onClick={() => toast("Enviamos um link de recuperação para seu e-mail")}
-              className="text-sm text-primary transition-opacity hover:opacity-80"
+              className="text-sm text-primary cursor-pointer transition-opacity hover:opacity-80"
             >
               Esqueci a senha
             </button>
@@ -107,6 +105,16 @@ function LoginPage() {
             {loading ? "Entrando…" : "Entrar"}
             {!loading && <ArrowRight className="size-4" />}
           </Button>
+
+          <p className="mt-4 text-center text-sm text-muted-foreground">
+            Não possui uma conta?{" "}
+            <a
+              href="/"
+              className="font-medium text-primary transition-colors hover:text-primary/80"
+            >
+              Criar conta
+            </a>
+          </p>
         </form>
 
         <p className="mt-6 text-center text-xs text-muted-foreground">
