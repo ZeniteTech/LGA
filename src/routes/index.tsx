@@ -30,6 +30,7 @@ export const Route = createFileRoute("/")({
 function RegisterPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -93,7 +94,7 @@ function RegisterPage() {
               <Lock className="absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
               <Input
                 id="senha"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 required
                 defaultValue=""
                 className="h-9 pl-8 text-xs"
@@ -107,7 +108,7 @@ function RegisterPage() {
               <Lock className="absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
               <Input
                 id="confirmar-senha"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 required
                 defaultValue=""
                 className="h-9 pl-8 text-xs"
@@ -118,7 +119,10 @@ function RegisterPage() {
 
           <div className="flex items-center justify-between pt-1">
             <label className="flex cursor-pointer items-center gap-2 text-xs text-muted-foreground">
-              <Checkbox /> Exibir Senha
+              <Checkbox 
+                checked={showPassword}
+                onCheckedChange={(checked) => setShowPassword(!!checked)}
+              /> Exibir Senha
             </label>
           </div>
 
