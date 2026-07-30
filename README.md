@@ -10,8 +10,8 @@ Esta aplicação frontend conecta-se a uma **API backend em Java**, que centrali
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **Frontend:** Streamlit / Python
-- **Backend / Persistência:** API REST em Java / Spring Boot
+- **Frontend:** React e TypeScript
+- **Backend / Persistência:** API REST em Java / Spring Boot e FastAPI
 - **Banco de Dados:** PostgreSQL (Neon.tech)
 - **Integrações Externas:** Google Places API & Claude AI (Anthropic)
 
