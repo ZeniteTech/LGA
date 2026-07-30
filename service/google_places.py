@@ -11,7 +11,7 @@ def buscar_empresas(cidade: str):
         "Content-Type": "application/json",
         "X-Goog-Api-Key": settings.GOOGLE_API_KEY,
         # Campos que retornam da api
-        "X-Goog-FieldMask": "places.displayName,places.formattedAddress,places.priceLevel,places.websiteUri,places.nationalPhoneNumber,places.rating,nextPageToken"
+        "X-Goog-FieldMask": "places.id,places.displayName, places.primaryTypeDisplayName.text, places.formattedAddress , places.addressComponents,places.websiteUri,places.nationalPhoneNumber,places.rating, places.userRatingCount, places.regularOpeningHours.weekdayDescriptions, places.photos, nextPageToken"
     }
 
     todas_empresa = []
