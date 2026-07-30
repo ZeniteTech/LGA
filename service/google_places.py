@@ -6,12 +6,13 @@ from config.enterprise import settings
 URL = "https://places.googleapis.com/v1/places:searchText"
 
 
-def buscar_empresas(cidade: str):
+def buscar_empresas(query: str):
     headers = {
         "Content-Type": "application/json",
         "X-Goog-Api-Key": settings.GOOGLE_API_KEY,
         # Campos que retornam da api
-        "X-Goog-FieldMask": "places.id,places.displayName, places.primaryTypeDisplayName.text, places.formattedAddress , places.addressComponents,places.websiteUri,places.nationalPhoneNumber,places.rating, places.userRatingCount, places.regularOpeningHours.weekdayDescriptions, places.photos, nextPageToken"
+        "X-Goog-FieldMask": "places.id,places.displayName,places.primaryTypeDisplayName.text,places.formattedAddress,places.addressComponents,places.websiteUri,places.nationalPhoneNumber,places.rating,places.userRatingCount,places.regularOpeningHours.weekdayDescriptions,places.photos,nextPageToken"
+        #"X-Goog-Api-Key": settings.GOOGLE_API_KEY,
     }
 
     todas_empresa = []
@@ -20,7 +21,7 @@ def buscar_empresas(cidade: str):
 
     while len(todas_empresa) < max_leads:
         body = {
-            "textQuery": f"empresas em {cidade}",
+            "textQuery": query,
             "pageSize": min(20, max_leads - len(todas_empresa)),
         }
         if page_token:
@@ -33,6 +34,7 @@ def buscar_empresas(cidade: str):
             return {}
 
         data = response.json()
+        print(f"Dados recebidos: {data}")
         places = data.get("places", [])
 
         if not places:
