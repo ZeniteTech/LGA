@@ -11,7 +11,7 @@ Esta aplicação frontend conecta-se a uma **API backend em Java**, que centrali
 ## 🛠️ Tecnologias Utilizadas
 
 - **Frontend:** React e TypeScript
-- **Backend / Persistência:** API REST em Java / Spring Boot e FastAPI
+- **Backend / Persistência:** API REST em Java / Spring Boot e Python / FastAPI
 - **Banco de Dados:** PostgreSQL (Neon.tech)
 - **Integrações Externas:** Google Places API & Claude AI (Anthropic)
 
@@ -23,16 +23,16 @@ Esta aplicação frontend conecta-se a uma **API backend em Java**, que centrali
 [ Usuário ] 
     │
     ▼
-[ Frontend Streamlit (LGA) ]
+[ Frontend React e TypeScript(LGA) ]
     │
     ▼
-[ Backend Java API (LGA_API) ]
+[ Backend Java API (LGA_API) e Python FastAPI]
     ├──► Google Places API (Extração de Leads em Tempo Real)
     ├──► Claude AI (Análise de Perfil & Propostas Personalizadas)
     └──► Neon PostgreSQL (Persistência & Gestão de Dados)
 ```
 
-1. **Extração de Leads:** A aplicação solicita buscas de empresas locais via API do Google Places através da API Java.
+1. **Extração de Leads:** A aplicação solicita buscas de empresas locais via API do Google Places através da Python FastAPI.
 
 2. **Processamento com IA:** Os dados coletados são enviados ao Claude AI para gerar propostas comerciais inteligentes e calcular o score de propensão de fechamento.
 
@@ -52,7 +52,7 @@ Esta aplicação frontend conecta-se a uma **API backend em Java**, que centrali
    ```
 
 ## 📌 Funcionalidades Principais
-🔍 **Prospecção Ativa:** Busca parametrizada por segmento e localização.
+🔍 **Prospecção Ativa:** Busca parametrizada por segmento e localização com Python FastAPI.
 
 🤖 **Enriquecimento com IA:** Geração automática de propostas customizadas e pontuação de leads.
 
