@@ -1,5 +1,5 @@
-import { activities, companies, scoreDistribution, searchHistory, weeklySeries } from "./data";
-import type { Company, PipelineStage } from "./types";
+import { activities, scoreDistribution, searchHistory, weeklySeries } from "./data";
+import type { PipelineStage } from "./types";
 
 /**
  * Thin REST client layer. Every call maps 1:1 to a Spring Boot endpoint.
@@ -44,33 +44,9 @@ export const api = {
       } satisfies DashboardMetrics,
       weeklySeries,
       scoreDistribution,
-      activities,
-      recentCompanies: companies.slice(0, 5),
+      activities
     }),
 
-  searchCompanies: (params: { query?: string; city?: string; category?: string }) =>
-    request(
-      `/api/leads/search?query=${encodeURIComponent(params.query ?? "")}`,
-      companies.filter((c) => {
-        const q = (params.query ?? "").toLowerCase();
-        const matchQuery =
-          !q ||
-          c.name.toLowerCase().includes(q) ||
-          c.category.toLowerCase().includes(q) ||
-          c.city.toLowerCase().includes(q);
-        const matchCity = !params.city || params.city === "all" || c.city === params.city;
-        const matchCategory =
-          !params.category || params.category === "all" || c.category === params.category;
-        return matchQuery && matchCity && matchCategory;
-      }),
-    ),
-
-  getCompanies: () => request("/api/companies", companies),
-
-  getCompany: (id: string) =>
-    request<Company | undefined>(`/api/companies/${id}`, companies.find((c) => c.id === id)),
-
-  getPipeline: () => request("/api/pipeline", companies),
 
   updateStage: (id: string, stage: PipelineStage) =>
     request(`/api/pipeline/${id}`, { id, stage }, { method: "PATCH" }),

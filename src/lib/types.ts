@@ -33,7 +33,8 @@ export interface Company {
   photos: string[];
   notes?: string;
 }
-
+//  "places.displayName,places.formattedAddress ,places.priceLevel,places.websiteUri,places.nationalPhoneNumber,places.rating,nextPageToken"
+    
 export interface SearchHistoryItem {
   id: string;
   query: string;
