@@ -17,7 +17,6 @@ import { Route as IaRouteImport } from './routes/ia'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as PipelineRouteImport } from './routes/pipeline'
-import { Route as EmpresasIndexRouteImport } from './routes/empresas.index'
 import { Route as EmpresasCompanyIdRouteImport } from './routes/empresas.$companyId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -60,11 +59,6 @@ const PipelineRoute = PipelineRouteImport.update({
   path: '/pipeline',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EmpresasIndexRoute = EmpresasIndexRouteImport.update({
-  id: '/empresas/',
-  path: '/empresas/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const EmpresasCompanyIdRoute = EmpresasCompanyIdRouteImport.update({
   id: '/empresas/$companyId',
   path: '/empresas/$companyId',
@@ -81,7 +75,6 @@ export interface FileRoutesByFullPath {
   '/perfil': typeof PerfilRoute
   '/pipeline': typeof PipelineRoute
   '/empresas/$companyId': typeof EmpresasCompanyIdRoute
-  '/empresas/': typeof EmpresasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -93,7 +86,6 @@ export interface FileRoutesByTo {
   '/perfil': typeof PerfilRoute
   '/pipeline': typeof PipelineRoute
   '/empresas/$companyId': typeof EmpresasCompanyIdRoute
-  '/empresas': typeof EmpresasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -106,7 +98,6 @@ export interface FileRoutesById {
   '/perfil': typeof PerfilRoute
   '/pipeline': typeof PipelineRoute
   '/empresas/$companyId': typeof EmpresasCompanyIdRoute
-  '/empresas/': typeof EmpresasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -120,7 +111,6 @@ export interface FileRouteTypes {
     | '/perfil'
     | '/pipeline'
     | '/empresas/$companyId'
-    | '/empresas/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -132,7 +122,6 @@ export interface FileRouteTypes {
     | '/perfil'
     | '/pipeline'
     | '/empresas/$companyId'
-    | '/empresas'
   id:
     | '__root__'
     | '/'
@@ -144,7 +133,6 @@ export interface FileRouteTypes {
     | '/perfil'
     | '/pipeline'
     | '/empresas/$companyId'
-    | '/empresas/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -157,7 +145,6 @@ export interface RootRouteChildren {
   PerfilRoute: typeof PerfilRoute
   PipelineRoute: typeof PipelineRoute
   EmpresasCompanyIdRoute: typeof EmpresasCompanyIdRoute
-  EmpresasIndexRoute: typeof EmpresasIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -218,13 +205,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PipelineRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/empresas/': {
-      id: '/empresas/'
-      path: '/empresas'
-      fullPath: '/empresas/'
-      preLoaderRoute: typeof EmpresasIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/empresas/$companyId': {
       id: '/empresas/$companyId'
       path: '/empresas/$companyId'
@@ -245,7 +225,6 @@ const rootRouteChildren: RootRouteChildren = {
   PerfilRoute: PerfilRoute,
   PipelineRoute: PipelineRoute,
   EmpresasCompanyIdRoute: EmpresasCompanyIdRoute,
-  EmpresasIndexRoute: EmpresasIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

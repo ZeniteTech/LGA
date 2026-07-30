@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import {
   ArrowUpDown,
@@ -10,7 +10,7 @@ import {
   SearchX,
   X,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { AppShell } from "@/components/layout/app-shell";
@@ -28,7 +28,10 @@ import {
 } from "@/components/ui/select";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { api } from "@/lib/api";
-import { companies as allCompanies, searchHistory, searchSuggestions } from "@/lib/data";
+import {searchHistory, searchSuggestions } from "@/lib/data";
+import { Target } from "inspector/promises";
+import { Company } from "@/lib/types";
+
 
 export const Route = createFileRoute("/buscar")({
   head: () => ({
@@ -49,33 +52,82 @@ export const Route = createFileRoute("/buscar")({
   component: SearchPage,
 });
 
-const cities = Array.from(new Set(allCompanies.map((c) => c.city)));
-const categories = Array.from(new Set(allCompanies.map((c) => c.category)));
-
-function SearchPage() {
+export function SearchPage() {
   const navigate = useNavigate();
   const [term, setTerm] = useState("");
   const [submitted, setSubmitted] = useState<string | null>(null);
-  const [city, setCity] = useState("all");
-  const [category, setCategory] = useState("all");
   const [sort, setSort] = useState("score");
   const [selected, setSelected] = useState<string[]>([]);
   const [focused, setFocused] = useState(false);
+  const [busca, setBusca] = useState("");
+  const [empresa, setEmpresa] = useState<Company[]>([]);
 
-  const { data, isFetching } = useQuery({
-    queryKey: ["search", submitted, city, category],
-    queryFn: () => api.searchCompanies({ query: submitted ?? "", city, category }),
-    enabled: submitted !== null,
-  });
+  //const searchEnterprise = useState<SearchEnterprise>;
+  const API_GOOGLE_PLACES_URL = "https://lga-google-places-api.up.railway.app/enterprise/search_leads";
+  // Buscando Empresas diretamente na API do Google Places, para evitar problemas de CORS e expor a chave da API no front-end, criamos um endpoint intermediário que faz a requisição para o Google Places.
 
-  const results = useMemo(() => {
-    const list = [...(data ?? [])];
-    if (sort === "score") list.sort((a, b) => (b.aiScore ?? -1) - (a.aiScore ?? -1));
-    if (sort === "rating") list.sort((a, b) => b.rating - a.rating);
-    if (sort === "reviews") list.sort((a, b) => b.reviews - a.reviews);
-    if (sort === "name") list.sort((a, b) => a.name.localeCompare(b.name));
-    return list;
-  }, [data, sort]);
+  async function buscarEmpresas(e: React.FormEvent) {
+    e.preventDefault();
+
+    console.log("Chamou a função");
+    console.log("Busca:", busca);
+
+    try {
+      const response = await fetch(
+        `${API_GOOGLE_PLACES_URL}?nichoEmpresa_cidade=${encodeURIComponent(busca)}`
+      );
+      
+      console.log(response.status);
+
+      const data = await response.json();
+      console.log(JSON.stringify(data, null, 2));
+      const empresasConvertidas: Company[] = data.places.map((place: any) => ({
+        id: place.id,
+
+        name: place.displayName?.text ?? "",
+
+        category: "Não informado",
+
+        address: place.formattedAddress ?? "",
+
+        city: "",
+
+        state: "",
+
+        phone: place.nationalPhoneNumber ?? "",
+
+        website: place.websiteUri ?? "",
+
+        rating: place.rating ?? 0,
+
+        reviews: place.userRatingCount ?? 0,
+
+        openingHours: "",
+
+        tags: [],
+
+        aiScore: null,
+
+        aiSummary: "",
+
+        favorite: false,
+
+        stage: "novo-lead",
+
+        createdAt: new Date().toISOString(),
+
+        photos: [],
+
+        notes: "",
+      }));
+      
+      setEmpresa(empresasConvertidas);
+      setSubmitted(busca);
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const processing = useMutation({
     mutationFn: () => api.runAiAnalysis(selected),
@@ -119,21 +171,21 @@ function SearchPage() {
               Descreva o segmento e a região. A plataforma cuida do resto.
             </p>
 
-            <div className="relative mt-7">
+            <form onSubmit={buscarEmpresas} className="relative mt-7">
               <div className="relative">
                 <Search className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-muted-foreground" />
                 <input
-                  value={term}
-                  onChange={(e) => setTerm(e.target.value)}
+                  value={busca}
+                  onChange={(e) => setBusca(e.target.value)}
                   onFocus={() => setFocused(true)}
                   onBlur={() => setTimeout(() => setFocused(false), 150)}
-                  onKeyDown={(e) => e.key === "Enter" && runSearch(term)}
+                  onKeyDown={(e) => e.key === "Enter" && buscarEmpresas(e)}
                   placeholder="Ex.: Escritórios de Advocacia em Limeira"
                   className="h-14 w-full rounded-2xl border border-border bg-card/80 pl-12 pr-32 text-sm outline-none transition-all placeholder:text-muted-foreground focus:border-primary/60 focus:glow-ring sm:text-base"
                 />
-                {term && (
+                {busca && (
                   <button
-                    onClick={() => setTerm("")}
+                    onClick={() => setBusca("")}
                     aria-label="Limpar"
                     className="absolute right-28 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
                   >
@@ -141,11 +193,10 @@ function SearchPage() {
                   </button>
                 )}
                 <Button
+                  type="submit"
                   className="absolute right-2 top-1/2 h-10 -translate-y-1/2 gap-1.5"
-                  onClick={() => runSearch(term)}
-                  disabled={isFetching}
                 >
-                  {isFetching ? "Buscando" : "Pesquisar"}
+                  Pesquisar
                 </Button>
               </div>
 
@@ -164,7 +215,7 @@ function SearchPage() {
                   ))}
                 </ul>
               )}
-            </div>
+            </form>
 
             <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
               <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
@@ -188,12 +239,12 @@ function SearchPage() {
             <div className="mt-6 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 sm:flex sm:flex-wrap sm:justify-between">
               <div className="min-w-0">
                 <p className="truncate text-sm font-medium">
-                  {isFetching ? "Consultando Google Places…" : `${results.length} resultados`}
+                 {/* {isFetching ? "Consultando Google Places…" : `${results.length} resultados`} */}
                 </p>
                 <p className="truncate text-xs text-muted-foreground">para “{submitted}”</p>
               </div>
               <div className="flex flex-wrap items-center gap-2">
-                <Select value={city} onValueChange={setCity}>
+                {/* <Select value={city} onValueChange={setCity}>
                   <SelectTrigger className="h-9 w-[150px]">
                     <SlidersHorizontal className="mr-1 size-3.5 text-muted-foreground" />
                     <SelectValue placeholder="Cidade" />
@@ -206,8 +257,8 @@ function SearchPage() {
                       </SelectItem>
                     ))}
                   </SelectContent>
-                </Select>
-                <Select value={category} onValueChange={setCategory}>
+                </Select> */}
+                {/* <Select value={category} onValueChange={setCategory}>
                   <SelectTrigger className="h-9 w-[190px]">
                     <SelectValue placeholder="Categoria" />
                   </SelectTrigger>
@@ -219,7 +270,7 @@ function SearchPage() {
                       </SelectItem>
                     ))}
                   </SelectContent>
-                </Select>
+                </Select> */}
                 <Select value={sort} onValueChange={setSort}>
                   <SelectTrigger className="h-9 w-[170px]">
                     <ArrowUpDown className="mr-1 size-3.5 text-muted-foreground" />
@@ -235,7 +286,7 @@ function SearchPage() {
               </div>
             </div>
 
-            {!isFetching && results.length > 0 && (
+            {/* {!isFetching && results.length > 0 && (
               <div className="mt-4 flex flex-wrap items-center gap-2">
                 <Button
                   variant="outline"
@@ -252,13 +303,13 @@ function SearchPage() {
                   <Badge className="rounded-full">{selected.length} empresas selecionadas</Badge>
                 )}
               </div>
-            )}
+            )} */}
 
-            <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {isFetching &&
-                Array.from({ length: 6 }).map((_, i) => <CompanyCardSkeleton key={i} />)}
-              {!isFetching &&
-                results.map((c) => (
+            { <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {/* {
+                Array.from({ length: 6 }).map((_, i) => <CompanyCardSkeleton key={i} />)} */}
+              {
+                empresa.map((c) => (
                   <CompanyCard
                     key={c.id}
                     company={c}
@@ -271,9 +322,9 @@ function SearchPage() {
                     onToggleFavorite={() => toast.success("Favorito atualizado")}
                   />
                 ))}
-            </div>
+            </div>}
 
-            {!isFetching && results.length === 0 && (
+            {/* {!isFetching && results.length === 0 && (
               <div className="mt-5">
                 <EmptyState
                   icon={SearchX}
@@ -292,7 +343,7 @@ function SearchPage() {
                   }
                 />
               </div>
-            )}
+            )} */}
           </>
         )}
 
