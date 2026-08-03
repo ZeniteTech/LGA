@@ -32,7 +32,10 @@ import {searchHistory, searchSuggestions } from "@/lib/data";
 import { Target } from "inspector/promises";
 import { Company } from "@/lib/types";
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 90715525dfd30585758d1c16f1b033a3086c02c1
 export const Route = createFileRoute("/authenticated/buscar")({
   head: () => ({
     meta: [
