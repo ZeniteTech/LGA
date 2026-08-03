@@ -11,7 +11,7 @@ import { Progress } from "@/components/ui/progress";
 import { companies } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/ia")({
+export const Route = createFileRoute("/authenticated/ia")({
   head: () => ({
     meta: [
       { title: "Processamento IA — LeadGen Automation" },

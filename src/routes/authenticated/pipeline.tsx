@@ -12,7 +12,7 @@ import { stageLabels, stageOrder } from "@/lib/data";
 import type { Company, PipelineStage } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/pipeline")({
+export const Route = createFileRoute("/authenticated/pipeline")({
   head: () => ({
     meta: [
       { title: "Pipeline — LeadGen Automation" },

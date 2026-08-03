@@ -19,7 +19,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/lib/api";
 import { searchHistory } from "@/lib/data";
 
-export const Route = createFileRoute("/historico")({
+export const Route = createFileRoute("/authenticated/historico")({
   head: () => ({
     meta: [
       { title: "Histórico de pesquisas — LeadGen Automation" },

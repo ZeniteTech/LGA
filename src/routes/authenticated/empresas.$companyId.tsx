@@ -27,7 +27,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { api } from "@/lib/api";
 import { stageLabels } from "@/lib/data";
 
-export const Route = createFileRoute("/empresas/$companyId")({
+export const Route = createFileRoute("/authenticated/empresas/$companyId")({
   head: () => ({
     meta: [
       { title: "Perfil da empresa — LeadGen Automation" },

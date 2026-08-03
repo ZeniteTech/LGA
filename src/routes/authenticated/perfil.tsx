@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 
-export const Route = createFileRoute("/perfil")({
+export const Route = createFileRoute("/authenticated/perfil")({
   head: () => ({
     meta: [
       { title: "Perfil — LeadGen Automation" },

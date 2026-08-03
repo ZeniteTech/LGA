@@ -33,7 +33,7 @@ import { Target } from "inspector/promises";
 import { Company } from "@/lib/types";
 
 
-export const Route = createFileRoute("/buscar")({
+export const Route = createFileRoute("/authenticated/buscar")({
   head: () => ({
     meta: [
       { title: "Buscar Leads — LeadGen Automation" },
@@ -133,7 +133,7 @@ export function SearchPage() {
     mutationFn: () => api.runAiAnalysis(selected),
     onSuccess: () => {
       toast.success(`${selected.length} empresas enviadas para a fila de IA`);
-      navigate({ to: "/ia" });
+      navigate({ to: "/authenticated/ia" });
     },
   });
 
